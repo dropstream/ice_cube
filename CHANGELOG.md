@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.1 / 2016-02-10
+
+* [BUGFIX] Parse time zone from ical
+
 ## 0.13.0 / 2015-05-26
 
 * [FEATURE] from_ical!
