@@ -118,6 +118,11 @@ module IceCube
   EXDATE;TZID=America/Denver:20130807T143000
   ICAL
 
+    ical_string_with_multiple_rules = <<-ICAL.gsub(/^\s*/, '' )
+  DTSTART;TZID=CDT:20151005T195541
+  RRULE:FREQ=WEEKLY;BYDAY=MO,TU
+  RRULE:FREQ=WEEKLY;INTERVAL=2;WKST=SU;BYDAY=FR
+    ICAL
 
     def sorted_ical(ical)
       ical.split(/\n/).sort.map { |field|
@@ -385,6 +390,13 @@ module IceCube
       it 'handles multiple EXDATE lines' do
         schedule = IceCube::Schedule.from_ical ical_string_with_multiple_exdates
         schedule.exception_times.count.should == 3
+      end
+    end
+
+    describe 'multiple rules' do
+      it 'handles multiple recurrence rules' do
+        schedule = IceCube::Schedule.from_ical ical_string_with_multiple_rules
+        schedule.recurrence_rules.count.should == 2
       end
     end
   end
