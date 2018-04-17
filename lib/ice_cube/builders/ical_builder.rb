@@ -40,7 +40,13 @@ module IceCube
       if time.utc?
         ":#{IceCube::I18n.l(time, format: '%Y%m%dT%H%M%SZ')}" # utc time
       else
-        ";TZID=#{IceCube::I18n.l(time, format: '%Z:%Y%m%dT%H%M%S')}" # local time specified
+        tzname = if time.respond_to?(:time_zone)
+                   time.time_zone.tzinfo.name
+                 else
+                   time.zone
+                 end
+
+        ";TZID=#{tzname}:#{IceCube::I18n.l(time, format: '%Y%m%dT%H%M%S')}" # local time specified
       end
     end
 

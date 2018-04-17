@@ -28,7 +28,8 @@ module IceCube
     def self._parse_in_tzid(value, tzid)
       time_parser = Time
       if tzid
-        time_parser = ActiveSupport::TimeZone.new(tzid.split('=')[1]) || Time
+        tz_name = tzid.split('=')[1]
+        time_parser = ActiveSupport::TimeZone.new(tz_name) || Time
       end
       time_parser.parse(value)
     end
